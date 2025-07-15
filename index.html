@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gayathri Jayaprakash - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ff88;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links li a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links li a:hover,
+        .nav-links li a.active {
+            color: #00ff88;
+        }
+
+        /* Page Container */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Home Page */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: #cccccc;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            color: #aaaaaa;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            color: #000;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1s ease 0.9s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
+        }
+
+        /* About Page */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 4rem;
+        }
+
+        .about-image {
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #000;
+            margin: 0 auto;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #00ff88;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #cccccc;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .skill-category h3 {
+            color: #00ff88;
+            margin-bottom: 1rem;
+        }
+
+        .skill-item {
+            background: rgba(0, 255, 136, 0.1);
+            padding: 0.5rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 20px;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        /* Projects Page */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .project-card h3 {
+            color: #00ff88;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .project-card p {
+            color: #cccccc;
+            margin-bottom: 1rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(0, 204, 255, 0.2);
+            color: #00ccff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .project-status {
+            color: #00ff88;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Contact Page */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .contact-info h3 {
+            color: #00ff88;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: #cccccc;
+        }
+
+        .contact-item i {
+            margin-right: 1rem;
+            color: #00ff88;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            color: #000;
+            padding: 1rem;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+        }
+
+        .social-link:hover {
+            transform: scale(1.1);
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #00ff88;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00ff88;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            color: #000;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Education Page */
+        .education-timeline {
+            position: relative;
+            margin-top: 3rem;
+        }
+
+        .education-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #00ff88, #00ccff);
+            transform: translateX(-50%);
+        }
+
+        .education-item {
+            position: relative;
+            margin-bottom: 3rem;
+            width: 45%;
+        }
+
+        .education-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .education-item:nth-child(even) {
+            left: 55%;
+        }
+
+        .education-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            position: relative;
+        }
+
+        .education-card::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            background: #00ff88;
+            border-radius: 50%;
+        }
+
+        .education-item:nth-child(odd) .education-card::before {
+            right: -30px;
+        }
+
+        .education-item:nth-child(even) .education-card::before {
+            left: -30px;
+        }
+
+        .education-card h3 {
+            color: #00ff88;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-card .grade {
+            color: #00ccff;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-card .year {
+            color: #cccccc;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .education-timeline::before {
+                left: 20px;
+            }
+
+            .education-item {
+                width: 100%;
+                left: 0 !important;
+                padding-left: 40px;
+            }
+
+            .education-card::before {
+                left: -30px !important;
+            }
+        }
+
+        /* Page Headers */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: #cccccc;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Gayathri</a>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
+                <li><a href="#" onclick="showPage('about')">About</a></li>
+                <li><a href="#" onclick="showPage('projects')">Projects</a></li>
+                <li><a href="#" onclick="showPage('education')">Education</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Gayathri Jayaprakash</h1>
+                <p class="subtitle">Computer Science & Engineering Student</p>
+                <p class="description">
+                    Passionate about coding, problem-solving, and turning innovative ideas into reality. 
+                    Always eager to learn new technologies and tackle challenging projects.
+                </p>
+                <a href="#" class="cta-button" onclick="showPage('projects')">View My Work</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page">
+        <div class="container">
+            <div class="page-header fade-in">
+                <h1>About Me</h1>
+                <p>Get to know more about my journey and skills</p>
+            </div>
+            
+            <div class="about-content fade-in">
+                <div class="about-image">
+                    <div class="profile-pic">GJ</div>
+                </div>
+                <div class="about-text">
+                    <h2>Hello, I'm Gayathri!</h2>
+                    <p>
+                        I'm an enthusiastic Computer Science and Engineering student at Sri Manakula Vinayagar Engineering College, Pondicherry. 
+                        Driven by a love for coding and a flair for problem-solving, I'm passionate about turning ideas into reality and 
+                        exploring ways technology can make a difference.
+                    </p>
+                    <p>
+                        Always open to learning, collaborating, and tackling new challenges! I believe in continuous growth and 
+                        staying updated with the latest technological advancements.
+                    </p>
+                </div>
+            </div>
+
+            <div class="skills-grid fade-in">
+                <div class="skill-category">
+                    <h3>Programming Languages</h3>
+                    <div class="skill-item">C++ (Advanced)</div>
+                    <div class="skill-item">Python</div>
+                    <div class="skill-item">Java</div>
+                    <div class="skill-item">C (Advanced)</div>
+                </div>
+                <div class="skill-category">
+                    <h3>Development</h3>
+                    <div class="skill-item">Full Stack Development</div>
+                    <div class="skill-item">Frontend Development</div>
+                    <div class="skill-item">Backend Development</div>
+                    <div class="skill-item">Web Development</div>
+                </div>
+                <div class="skill-category">
+                    <h3>Soft Skills</h3>
+                    <div class="skill-item">Puzzle Solving</div>
+                    <div class="skill-item">Good Communication</div>
+                    <div class="skill-item">Decision Making</div>
+                    <div class="skill-item">Problem Solving</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects Page -->
+    <div id="projects" class="page">
+        <div class="container">
+            <div class="page-header fade-in">
+                <h1>My Projects</h1>
+                <p>A showcase of my technical work and achievements</p>
+            </div>
+
+            <div class="projects-grid fade-in">
+                <div class="project-card">
+                    <h3>🎮 Micro Adventure Generator</h3>
+                    <p>
+                        A creative project developed for the GeeksforGeeks Hackathon in 2023. 
+                        This application generates unique micro-adventures for users, focusing on 
+                        clean, responsive design and seamless user experience.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Frontend Development</span>
+                        <span class="tech-tag">Responsive Design</span>
+                        <span class="tech-tag">UI/UX</span>
+                    </div>
+                    <p class="project-status">✅ Completed (2023)</p>
+                    <p><strong>Key Learning:</strong> Gained valuable experience with frontend-backend integration and user-centered design principles.</p>
+                </div>
+
+                <div class="project-card">
+                    <h3>🕵️ Fake News Detection System</h3>
+                    <p>
+                        An AI-powered solution that uses Natural Language Processing (NLP) and Machine Learning 
+                        algorithms to classify news articles as real or fake. This project addresses the growing 
+                        concern of misinformation in digital media.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Machine Learning</span>
+                        <span class="tech-tag">NLP</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">AI</span>
+                    </div>
+                    <p class="project-status">🚧 Currently in Development</p>
+                    <p><strong>Objective:</strong> Building a robust classification system to help users identify reliable news sources.</p>
+                </div>
+
+                <div class="project-card">
+                    <h3>🌟 More Projects Coming Soon</h3>
+                    <p>
+                        I'm constantly working on new and exciting projects. Stay tuned for updates on my latest 
+                        developments in web development, machine learning, and software engineering.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Full Stack</span>
+                        <span class="tech-tag">Innovation</span>
+                        <span class="tech-tag">Learning</span>
+                    </div>
+                    <p class="project-status">🔄 In Planning</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Education Page -->
+    <div id="education" class="page">
+        <div class="container">
+            <div class="page-header fade-in">
+                <h1>Education</h1>
+                <p>My academic journey and achievements</p>
+            </div>
+
+            <div class="education-timeline fade-in">
+                <div class="education-item">
+                    <div class="education-card">
+                        <h3>B.Tech in Computer Science & Engineering</h3>
+                        <div class="grade">CGPA: 8.32 (up to 4th Semester)</div>
+                        <div class="year">2023 - Present</div>
+                        <p>Sri Manakula Vinayagar Engineering College, Pondicherry</p>
+                        <p>Specialized in software development, data structures, algorithms, and modern computing technologies.</p>
+                    </div>
+                </div>
+
+                <div class="education-item">
+                    <div class="education-card">
+                        <h3>Higher Secondary Education (12th)</h3>
+                        <div class="grade">89% Score</div>
+                        <div class="year">2023</div>
+                        <p>Successfully completed higher secondary education with excellent performance in science and mathematics.</p>
+                    </div>
+                </div>
+
+                <div class="education-item">
+                    <div class="education-card">
+                        <h3>Secondary Education (10th)</h3>
+                        <div class="grade">All Pass</div>
+                        <div class="year">2021</div>
+                        <p>Completed secondary education with a strong foundation in core subjects, setting the stage for future academic success.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+        <div class="container">
+            <div class="page-header fade-in">
+                <h1>Get In Touch</h1>
+                <p>Let's connect and collaborate on exciting projects</p>
+            </div>
+
+            <div class="contact-content fade-in">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <div class="contact-item">
+                        <i>📱</i>
+                        <span>+91 9443601566</span>
+                    </div>
+                    <div class="contact-item">
+                        <i>📧</i>
+                        <span>gayathrijayaprakash@email.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i>📍</i>
+                        <span>Kariyamanickam, Puducherry - 605 106</span>
+                    </div>
+                    <div class="contact-item">
+                        <i>🎓</i>
+                        <span>Sri Manakula Vinayagar Engineering College</span>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="https://github.com/Gayathrijayaparakash" target="_blank" class="social-link" title="GitHub">
+                            <span>GH</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/gayathri-jayaprakash-0b69472a9" target="_blank" class="social-link" title="LinkedIn">
+                            <span>LI</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h3>Send a Message</h3>
+                    <form onsubmit="handleSubmit(event)">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation functionality
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update active nav link
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Add fade-in animation to new page content
+            const newPage = document.getElementById(pageId);
+            const elements = newPage.querySelectorAll('.fade-in');
+            elements.forEach((element, index) => {
+                element.style.animation = 'none';
+                element.offsetHeight; // Trigger reflow
+                element.style.animation = `fadeInUp 0.8s ease ${index * 0.1}s both`;
+            });
+        }
+
+        // Form submission handler
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Simulate form submission
+            alert(`Thank you, ${name}! Your message has been received. I'll get back to you soon at ${email}.`);
+            
+            // Reset form
+            event.target.reset();
+        }
+
+        // Smooth scrolling for navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add scroll effect to navbar
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.background = 'rgba(0, 0, 0, 0.98)';
+                } else {
+                    navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+                }
+            });
+
+            // Initialize page animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.8s ease';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // Add typing effect to hero text
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+
+        // Initialize typing effect on page load
+        window.addEventListener('load', function() {
+            const heroTitle = document.querySelector('.hero h1');
+            const originalText = heroTitle.textContent;
+            typeWriter(heroTitle, originalText, 150);
+        });
+    </script>
+</body>
+</html>
